@@ -201,7 +201,7 @@ namespace FreshDesk.APIControllers
                     reader.Close();
                     dataStream.Close();
                 }
-                return Ok(responseBody);
+                return Ok("Deleted Successfully");
             }
             catch (Exception e)
             {
