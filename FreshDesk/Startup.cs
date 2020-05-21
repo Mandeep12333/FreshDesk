@@ -44,6 +44,7 @@ namespace FreshDesk
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "FreshDesk");
+                c.RoutePrefix = string.Empty;
             });
 
             app.UseRouting();
