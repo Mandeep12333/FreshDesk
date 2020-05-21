@@ -20,9 +20,13 @@ namespace FreshDesk.Unit.Tests
             _freshDeskModel = Options.Create(freskdesk);
         }
 
+        /// <summary>
+        /// Test the Create ticket method of the Ticket API Controller
+        /// </summary>
         [Fact]
         public void Returnscreatetickets()
         {
+            //Arrange
             var ticketModel = new TicketModel
             {
                 description = "Test Description",
@@ -42,10 +46,14 @@ namespace FreshDesk.Unit.Tests
             Assert.Equal(successStatus, statusCode);
         }
 
+        /// <summary>
+        /// Test the view a ticket method of the Ticket API Controller
+        /// </summary>
         [Fact]
         public void Returnsviewaticket()
         {
-            int id = 20;
+            //Arrange
+            long id = 20;
 
             var controller = new TicketsAPIController(_freshDeskModel);
 
@@ -57,9 +65,13 @@ namespace FreshDesk.Unit.Tests
             Assert.Equal(successStatus, statusCode);
         }
 
+        /// <summary>
+        /// Test the list of all tickets method of the Ticket API Controller
+        /// </summary>
         [Fact]
         public void Returnslistalltickets()
         {
+            //Arrange
             var controller = new TicketsAPIController(_freshDeskModel);
 
             // Act
@@ -70,9 +82,13 @@ namespace FreshDesk.Unit.Tests
             Assert.Equal(successStatus, statusCode);
         }
 
+        /// <summary>
+        /// Test the update a ticket method of the Ticket API Controller
+        /// </summary>
         [Fact]
         public void Returnsupdateaticket()
         {
+            //Arrange
             var ticketModel = new TicketModel
             {
                 description = "Test Description",
@@ -82,7 +98,7 @@ namespace FreshDesk.Unit.Tests
                 subject = "test"
             };
 
-            int id = 20;
+            long id = 20;
 
             var controller = new TicketsAPIController(_freshDeskModel);
 
@@ -94,10 +110,14 @@ namespace FreshDesk.Unit.Tests
             Assert.Equal(successStatus, statusCode);
         }
 
+        /// <summary>
+        /// Test the delete a ticket method of the Ticket API Controller
+        /// </summary>
         [Fact]
         public void Returnsdeleteaticket()
         {
-            int id = 25;  //Id need to be change every time
+            //Arrange
+            long id = 25;  //Id need to be change every time
 
             var controller = new TicketsAPIController(_freshDeskModel);
 

@@ -69,7 +69,7 @@ namespace FreshDesk.APIControllers
         /// </summary>
         [HttpGet]
         [Route("ViewaTicket")]
-        public IActionResult ViewaTicket(int id)
+        public IActionResult ViewaTicket(long id)
         {
             string apiPath = $"tickets/{id}";
             string responseBody = String.Empty;
@@ -144,7 +144,7 @@ namespace FreshDesk.APIControllers
         /// </summary>
         [HttpPut]
         [Route("UpdateaTicket")]
-        public IActionResult UpdateaTicket(int id, TicketModel ticketModel)
+        public IActionResult UpdateaTicket(long id, TicketModel ticketModel)
         {
             string apiPath = $"tickets/{id}";
             string json = JsonConvert.SerializeObject(ticketModel);
@@ -181,7 +181,7 @@ namespace FreshDesk.APIControllers
         /// </summary>
         [HttpDelete]
         [Route("DeleteaTicket")]
-        public IActionResult DeleteaTicket(int id)
+        public IActionResult DeleteaTicket(long id)
         {
             string apiPath = $"tickets/{id}";
             string responseBody = String.Empty;

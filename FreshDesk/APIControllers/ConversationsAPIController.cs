@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -22,14 +23,12 @@ namespace FreshDesk.APIControllers
         }
 
         /// <summary>
-        /// Create Note with these 3 parameters:
+        /// Create Note with these 1 parameters:
         /// 1.body Content of the note in HTML
-        /// 2.incoming The default value is false
-        /// 3.Private The default value is true
         /// </summary>
         [HttpPost]
         [Route("CreateNote")]
-        public IActionResult CreateNote(int ticket_id, NoteModel noteModel)
+        public IActionResult CreateNote(long ticket_id, NoteModel noteModel)
         {
             string apiPath = $"tickets/{ticket_id}/notes";
             string json = JsonConvert.SerializeObject(noteModel);
@@ -51,24 +50,60 @@ namespace FreshDesk.APIControllers
                 dataStream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(dataStream);
                 string Response = reader.ReadToEnd();
-                return Ok(Response);
+                NotesModel notes = new NotesModel();
+                notes = JsonConvert.DeserializeObject<NotesModel>(Response);
+                return Ok(notes);
             }
             catch (Exception e)
             {
-                return Ok(e.Message);
+                return BadRequest(e.Message);
             }
         }
 
         /// <summary>
-        /// Update a conversation's body parameters on the basis of Id:
-        /// body Content of the note in HTML
+        /// List all Ticket Notes on the basis of ticket id
+        /// </summary>
+        [HttpGet]
+        [Route("ListallTicketNotes")]
+        public IActionResult ListallTicketNotes(long id)
+        {
+            string apiPath = $"tickets/{id}/conversations";
+            string responseBody = String.Empty;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_freshDeskModel.BaseURL + apiPath);
+            request.ContentType = "application/json";
+            request.Method = "GET";
+            string authInfo = _freshDeskModel.APIKey + ":X";
+            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+            request.Headers["Authorization"] = "Basic " + authInfo;
+            try
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    Stream dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    responseBody = reader.ReadToEnd();
+                    reader.Close();
+                    dataStream.Close();
+                }
+                List<NotesModel> notes = new List<NotesModel>();
+                notes = JsonConvert.DeserializeObject<List<NotesModel>>(responseBody);
+                return Ok(notes);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Update a conversation's body parameters on the basis of Id
         /// </summary>
         [HttpPut]
         [Route("Updateaconversation")]
-        public IActionResult Updateaconversation(int id, string body)
+        public IActionResult Updateaconversation(long id, NoteModel noteModel)
         {
             string apiPath = $"conversations/{id}";
-            string json = JsonConvert.SerializeObject(body);
+            string json = JsonConvert.SerializeObject(noteModel);
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_freshDeskModel.BaseURL + apiPath);
             request.ContentType = "application/json";
             request.Method = "PUT";
@@ -87,11 +122,13 @@ namespace FreshDesk.APIControllers
                 dataStream = response.GetResponseStream();
                 StreamReader reader = new StreamReader(dataStream);
                 string Response = reader.ReadToEnd();
-                return Ok(Response);
+                NotesModel notes = new NotesModel();
+                notes = JsonConvert.DeserializeObject<NotesModel>(Response);
+                return Ok(notes);
             }
             catch (Exception e)
             {
-                return Ok(e.Message);
+                return BadRequest(e.Message);
             }
         }
 
@@ -100,7 +137,7 @@ namespace FreshDesk.APIControllers
         /// </summary>
         [HttpDelete]
         [Route("Deleteaconversation")]
-        public IActionResult Deleteaconversation(int id)
+        public IActionResult Deleteaconversation(long id)
         {
             string apiPath = $"conversations/{id}";
             string responseBody = String.Empty;
@@ -120,11 +157,11 @@ namespace FreshDesk.APIControllers
                     reader.Close();
                     dataStream.Close();
                 }
-                return Ok(responseBody);
+                return Ok("Deleted Successfully");
             }
             catch (Exception e)
             {
-                return Ok(e.Message);
+                return BadRequest(e.Message);
             }
         }
     }
