@@ -1,4 +1,5 @@
 ﻿using FreshDesk.Models;
+using FreshDesk.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Options;
@@ -17,10 +18,12 @@ namespace FreshDesk.APIControllers
     public class TicketsAPIController : ControllerBase
     {
         private readonly FreshDeskModel _freshDeskModel;
+        private readonly ExceptionFilter _exceptionFilter;
 
-        public TicketsAPIController(IOptions<FreshDeskModel> freshDeskModel)
+        public TicketsAPIController(IOptions<FreshDeskModel> freshDeskModel,ExceptionFilter exceptionFilter)
         {
             _freshDeskModel = freshDeskModel.Value;  //Get API Key and Base URL from the appsettings.json
+            _exceptionFilter = exceptionFilter;
         }
 
         /// <summary>
@@ -61,9 +64,11 @@ namespace FreshDesk.APIControllers
                     Tickets = JsonConvert.DeserializeObject<TicketsModel>(Response);
                     return Ok(Tickets);
                 }
-                catch (Exception e)
+                catch (WebException e)
                 {
-                    return BadRequest(e.Message);
+                    var ex = (int)((HttpWebResponse)e.Response).StatusCode;
+                    ExceptionModel exceptionModel = _exceptionFilter.ExceptionType(ex);
+                    return BadRequest(exceptionModel);
                 }
             }
             else
@@ -103,9 +108,11 @@ namespace FreshDesk.APIControllers
                     Tickets = JsonConvert.DeserializeObject<TicketsModel>(responseBody);
                     return Ok(Tickets);
                 }
-                catch (Exception e)
+                catch (WebException e)
                 {
-                    return BadRequest(e.Message);
+                    var ex = (int)((HttpWebResponse)e.Response).StatusCode;
+                    ExceptionModel exceptionModel = _exceptionFilter.ExceptionType(ex);
+                    return BadRequest(exceptionModel);
                 }
             }
             else
@@ -143,9 +150,11 @@ namespace FreshDesk.APIControllers
                 TicketsList = JsonConvert.DeserializeObject<List<TicketsModel>>(responseBody);
                 return Ok(TicketsList);
             }
-            catch (Exception e)
+            catch (WebException e)
             {
-                return BadRequest(e.Message);
+                var ex = (int)((HttpWebResponse)e.Response).StatusCode;
+                ExceptionModel exceptionModel = _exceptionFilter.ExceptionType(ex);
+                return BadRequest(exceptionModel);
             }
         }
 
@@ -187,9 +196,11 @@ namespace FreshDesk.APIControllers
                     Tickets = JsonConvert.DeserializeObject<TicketsModel>(Response);
                     return Ok(Tickets);
                 }
-                catch (Exception e)
+                catch (WebException e)
                 {
-                    return BadRequest(e.Message);
+                    var ex = (int)((HttpWebResponse)e.Response).StatusCode;
+                    ExceptionModel exceptionModel = _exceptionFilter.ExceptionType(ex);
+                    return BadRequest(exceptionModel);
                 }
             }
             else if(id == 0)
@@ -231,9 +242,11 @@ namespace FreshDesk.APIControllers
                     }
                     return Ok("Deleted Successfully");
                 }
-                catch (Exception e)
+                catch (WebException e)
                 {
-                    return BadRequest(e.Message);
+                    var ex = (int)((HttpWebResponse)e.Response).StatusCode;
+                    ExceptionModel exceptionModel = _exceptionFilter.ExceptionType(ex);
+                    return BadRequest(exceptionModel);
                 }
             }
             else

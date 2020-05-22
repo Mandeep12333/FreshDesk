@@ -1,5 +1,6 @@
 ﻿using FreshDesk.APIControllers;
 using FreshDesk.Models;
+using FreshDesk.Utilities;
 using Microsoft.Extensions.Options;
 using Xunit;
 
@@ -8,6 +9,7 @@ namespace FreshDesk.Unit.Tests
     public class ConversationAPIShould
     {
         public IOptions<FreshDeskModel> _freshDeskModel;
+        private readonly ExceptionFilter _exceptionFilter;
         public int successStatus = 200;
 
         public ConversationAPIShould()
@@ -34,7 +36,7 @@ namespace FreshDesk.Unit.Tests
 
             long id = 38;
 
-            var controller = new ConversationsAPIController(_freshDeskModel);
+            var controller = new ConversationsAPIController(_freshDeskModel, _exceptionFilter);
 
             // Act
             var result = controller.CreateNote(id, noteModel);
@@ -53,7 +55,7 @@ namespace FreshDesk.Unit.Tests
             //Arrange
             long id = 38;
 
-            var controller = new ConversationsAPIController(_freshDeskModel);
+            var controller = new ConversationsAPIController(_freshDeskModel, _exceptionFilter);
 
             // Act
             var result = controller.ListAllTicketNotes(id);
@@ -77,7 +79,7 @@ namespace FreshDesk.Unit.Tests
 
             long id = 65000213246;
 
-            var controller = new ConversationsAPIController(_freshDeskModel);
+            var controller = new ConversationsAPIController(_freshDeskModel, _exceptionFilter);
 
             // Act
             var result = controller.UpdateConversation(id, noteModel);
@@ -96,7 +98,7 @@ namespace FreshDesk.Unit.Tests
             //Arrange
             long id = 65000213324;   //Id need to be change every time
 
-            var controller = new ConversationsAPIController(_freshDeskModel);
+            var controller = new ConversationsAPIController(_freshDeskModel, _exceptionFilter);
 
             // Act
             var result = controller.DeleteConversation(id);

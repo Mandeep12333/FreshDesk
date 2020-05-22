@@ -1,4 +1,5 @@
 ﻿using FreshDesk.Models;
+using FreshDesk.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -16,10 +17,12 @@ namespace FreshDesk.APIControllers
     public class ConversationsAPIController : ControllerBase
     {
         private readonly FreshDeskModel _freshDeskModel;
+        private readonly ExceptionFilter _exceptionFilter;
 
-        public ConversationsAPIController(IOptions<FreshDeskModel> freshDeskModel)
+        public ConversationsAPIController(IOptions<FreshDeskModel> freshDeskModel, ExceptionFilter exceptionFilter)
         {
             _freshDeskModel = freshDeskModel.Value;   //Get API Key and Base URL from the appsettings.json
+            _exceptionFilter = exceptionFilter;
         }
 
         /// <summary>
@@ -56,9 +59,11 @@ namespace FreshDesk.APIControllers
                     notes = JsonConvert.DeserializeObject<NotesModel>(Response);
                     return Ok(notes);
                 }
-                catch (Exception e)
+                catch (WebException e)
                 {
-                    return BadRequest(e.Message);
+                    var ex = (int)((HttpWebResponse)e.Response).StatusCode;
+                    ExceptionModel exceptionModel = _exceptionFilter.ExceptionType(ex);
+                    return BadRequest(exceptionModel);
                 }
             }
             else if(ticket_id == 0)
@@ -102,9 +107,11 @@ namespace FreshDesk.APIControllers
                     notes = JsonConvert.DeserializeObject<List<NotesModel>>(responseBody);
                     return Ok(notes);
                 }
-                catch (Exception e)
+                catch (WebException e)
                 {
-                    return BadRequest(e.Message);
+                    var ex = (int)((HttpWebResponse)e.Response).StatusCode;
+                    ExceptionModel exceptionModel = _exceptionFilter.ExceptionType(ex);
+                    return BadRequest(exceptionModel);
                 }
             }
             else
@@ -146,9 +153,11 @@ namespace FreshDesk.APIControllers
                     notes = JsonConvert.DeserializeObject<NotesModel>(Response);
                     return Ok(notes);
                 }
-                catch (Exception e)
+                catch (WebException e)
                 {
-                    return BadRequest(e.Message);
+                    var ex = (int)((HttpWebResponse)e.Response).StatusCode;
+                    ExceptionModel exceptionModel = _exceptionFilter.ExceptionType(ex);
+                    return BadRequest(exceptionModel);
                 }
             }
             else if(id == 0)
@@ -190,9 +199,11 @@ namespace FreshDesk.APIControllers
                     }
                     return Ok("Deleted Successfully");
                 }
-                catch (Exception e)
+                catch (WebException e)
                 {
-                    return BadRequest(e.Message);
+                    var ex = (int)((HttpWebResponse)e.Response).StatusCode;
+                    ExceptionModel exceptionModel = _exceptionFilter.ExceptionType(ex);
+                    return BadRequest(exceptionModel);
                 }
             }
             else

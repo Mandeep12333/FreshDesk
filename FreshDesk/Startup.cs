@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
+using FreshDesk.Utilities;
 
 namespace FreshDesk
 {
@@ -29,6 +30,8 @@ namespace FreshDesk
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FreshDesk", Version = "v1" });
             });
+
+            services.AddScoped(typeof(ExceptionFilter));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
