@@ -64,8 +64,8 @@ namespace FreshDesk.APIControllers
         /// List all Ticket Notes on the basis of ticket id
         /// </summary>
         [HttpGet]
-        [Route("ListallTicketNotes")]
-        public IActionResult ListallTicketNotes(long id)
+        [Route("ListAllTicketNotes")]
+        public IActionResult ListAllTicketNotes(long id)
         {
             string apiPath = $"tickets/{id}/conversations";
             string responseBody = String.Empty;
@@ -99,8 +99,8 @@ namespace FreshDesk.APIControllers
         /// Update a conversation's body parameters on the basis of Id
         /// </summary>
         [HttpPut]
-        [Route("Updateaconversation")]
-        public IActionResult Updateaconversation(long id, NoteModel noteModel)
+        [Route("UpdateConversation")]
+        public IActionResult UpdateConversation(long id, NoteModel noteModel)
         {
             string apiPath = $"conversations/{id}";
             string json = JsonConvert.SerializeObject(noteModel);
@@ -136,8 +136,8 @@ namespace FreshDesk.APIControllers
         /// Delete a conversation on the basis of Id
         /// </summary>
         [HttpDelete]
-        [Route("Deleteaconversation")]
-        public IActionResult Deleteaconversation(long id)
+        [Route("DeleteConversation")]
+        public IActionResult DeleteConversation(long id)
         {
             string apiPath = $"conversations/{id}";
             string responseBody = String.Empty;

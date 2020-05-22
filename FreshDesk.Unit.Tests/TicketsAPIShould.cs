@@ -24,7 +24,7 @@ namespace FreshDesk.Unit.Tests
         /// Test the Create ticket method of the Ticket API Controller
         /// </summary>
         [Fact]
-        public void Returnscreatetickets()
+        public void ReturnsCreateTickets()
         {
             //Arrange
             var ticketModel = new TicketModel
@@ -50,7 +50,7 @@ namespace FreshDesk.Unit.Tests
         /// Test the view a ticket method of the Ticket API Controller
         /// </summary>
         [Fact]
-        public void Returnsviewaticket()
+        public void ReturnsViewaTicket()
         {
             //Arrange
             long id = 20;
@@ -58,7 +58,7 @@ namespace FreshDesk.Unit.Tests
             var controller = new TicketsAPIController(_freshDeskModel);
 
             // Act
-            var result = controller.ViewaTicket(id);
+            var result = controller.ViewTicket(id);
             var statusCode = (((Microsoft.AspNetCore.Mvc.ObjectResult)result).StatusCode);
 
             //Assert
@@ -69,7 +69,7 @@ namespace FreshDesk.Unit.Tests
         /// Test the list of all tickets method of the Ticket API Controller
         /// </summary>
         [Fact]
-        public void Returnslistalltickets()
+        public void ReturnsListAllTickets()
         {
             //Arrange
             var controller = new TicketsAPIController(_freshDeskModel);
@@ -86,7 +86,7 @@ namespace FreshDesk.Unit.Tests
         /// Test the update a ticket method of the Ticket API Controller
         /// </summary>
         [Fact]
-        public void Returnsupdateaticket()
+        public void ReturnsUpdateTicket()
         {
             //Arrange
             var ticketModel = new TicketModel
@@ -103,7 +103,7 @@ namespace FreshDesk.Unit.Tests
             var controller = new TicketsAPIController(_freshDeskModel);
 
             // Act
-            var result = controller.UpdateaTicket(id, ticketModel);
+            var result = controller.UpdateTicket(id, ticketModel);
             var statusCode = (((Microsoft.AspNetCore.Mvc.ObjectResult)result).StatusCode);
 
             //Assert
@@ -114,7 +114,7 @@ namespace FreshDesk.Unit.Tests
         /// Test the delete a ticket method of the Ticket API Controller
         /// </summary>
         [Fact]
-        public void Returnsdeleteaticket()
+        public void ReturnsDeleteTicket()
         {
             //Arrange
             long id = 25;  //Id need to be change every time
@@ -122,7 +122,7 @@ namespace FreshDesk.Unit.Tests
             var controller = new TicketsAPIController(_freshDeskModel);
 
             // Act
-            var result = controller.DeleteaTicket(id);
+            var result = controller.DeleteTicket(id);
             var statusCode = (((Microsoft.AspNetCore.Mvc.ObjectResult)result).StatusCode);
 
             //Assert

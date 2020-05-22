@@ -24,7 +24,7 @@ namespace FreshDesk.Unit.Tests
         /// Test the Create note method of the Conversation API Controller
         /// </summary>
         [Fact]
-        public void Returnscreatenote()
+        public void ReturnsCreateNote()
         {
             //Arrange
             var noteModel = new NoteModel
@@ -48,7 +48,7 @@ namespace FreshDesk.Unit.Tests
         /// Test the list all ticket notes method of the Conversation API Controller
         /// </summary>
         [Fact]
-        public void Listallticketnotes()
+        public void ReturnsListAllTicketNotes()
         {
             //Arrange
             long id = 38;
@@ -56,7 +56,7 @@ namespace FreshDesk.Unit.Tests
             var controller = new ConversationsAPIController(_freshDeskModel);
 
             // Act
-            var result = controller.ListallTicketNotes(id);
+            var result = controller.ListAllTicketNotes(id);
             var statusCode = (((Microsoft.AspNetCore.Mvc.ObjectResult)result).StatusCode);
 
             //Assert
@@ -67,7 +67,7 @@ namespace FreshDesk.Unit.Tests
         /// Test the update conversation method of the Conversation API Controller
         /// </summary>
         [Fact]
-        public void Returnsupdateaconversation()
+        public void ReturnsUpdateConversation()
         {
             //Arrange
             var noteModel = new NoteModel
@@ -80,7 +80,7 @@ namespace FreshDesk.Unit.Tests
             var controller = new ConversationsAPIController(_freshDeskModel);
 
             // Act
-            var result = controller.Updateaconversation(id, noteModel);
+            var result = controller.UpdateConversation(id, noteModel);
             var statusCode = (((Microsoft.AspNetCore.Mvc.ObjectResult)result).StatusCode);
 
             //Assert
@@ -91,7 +91,7 @@ namespace FreshDesk.Unit.Tests
         /// Test the delete conversation method of the Conversation API Controller
         /// </summary>
         [Fact]
-        public void Returnsdeleteaconversation()
+        public void ReturnsDeleteConversation()
         {
             //Arrange
             long id = 65000213324;   //Id need to be change every time
@@ -99,7 +99,7 @@ namespace FreshDesk.Unit.Tests
             var controller = new ConversationsAPIController(_freshDeskModel);
 
             // Act
-            var result = controller.Deleteaconversation(id);
+            var result = controller.DeleteConversation(id);
             var statusCode = (((Microsoft.AspNetCore.Mvc.ObjectResult)result).StatusCode);
 
             //Assert
