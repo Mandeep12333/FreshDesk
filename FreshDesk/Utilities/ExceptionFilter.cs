@@ -5,6 +5,10 @@ namespace FreshDesk.Utilities
 {
     public class ExceptionFilter
     {
+        public ExceptionFilter()
+        {
+
+        }
         public ExceptionModel ExceptionType(int exceptionCode)
         {
             ExceptionModel exceptionModel = new ExceptionModel();

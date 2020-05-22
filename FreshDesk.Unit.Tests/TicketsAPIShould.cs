@@ -20,6 +20,7 @@ namespace FreshDesk.Unit.Tests
                 BaseURL = "https://rafadevsupport.freshdesk.com/api/v2/"
             };
             _freshDeskModel = Options.Create(freskdesk);
+            _exceptionFilter = new ExceptionFilter();
         }
 
         /// <summary>

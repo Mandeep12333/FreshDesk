@@ -168,10 +168,10 @@ D:\FreshDesk\FreshDesk.Unit.Tests\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.Visu
 D:\FreshDesk\FreshDesk.Unit.Tests\bin\Debug\netcoreapp3.1\FreshDesk.dll
 D:\FreshDesk\FreshDesk.Unit.Tests\bin\Debug\netcoreapp3.1\FreshDesk.pdb
 D:\FreshDesk\FreshDesk.Unit.Tests\obj\Debug\netcoreapp3.1\FreshDesk.Unit.Tests.csprojAssemblyReference.cache
+D:\FreshDesk\FreshDesk.Unit.Tests\obj\Debug\netcoreapp3.1\FreshDesk.Unit.Tests.csproj.CoreCompileInputs.cache
 D:\FreshDesk\FreshDesk.Unit.Tests\obj\Debug\netcoreapp3.1\FreshDesk.Unit.Tests.AssemblyInfoInputs.cache
 D:\FreshDesk\FreshDesk.Unit.Tests\obj\Debug\netcoreapp3.1\FreshDesk.Unit.Tests.AssemblyInfo.cs
 D:\FreshDesk\FreshDesk.Unit.Tests\obj\Debug\netcoreapp3.1\FreshDesk.Unit.Tests.csproj.CopyComplete
 D:\FreshDesk\FreshDesk.Unit.Tests\obj\Debug\netcoreapp3.1\FreshDesk.Unit.Tests.dll
 D:\FreshDesk\FreshDesk.Unit.Tests\obj\Debug\netcoreapp3.1\FreshDesk.Unit.Tests.pdb
 D:\FreshDesk\FreshDesk.Unit.Tests\obj\Debug\netcoreapp3.1\FreshDesk.Unit.Tests.genruntimeconfig.cache
-D:\FreshDesk\FreshDesk.Unit.Tests\obj\Debug\netcoreapp3.1\FreshDesk.Unit.Tests.csproj.CoreCompileInputs.cache
