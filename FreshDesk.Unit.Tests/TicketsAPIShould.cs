@@ -31,8 +31,8 @@ namespace FreshDesk.Unit.Tests
             {
                 description = "Test Description",
                 email = "test@test.com",
-                priority = 1,
-                status = 2,
+                priority = Enum.TicketPriority.High,
+                status = Enum.TicketStatus.Open,
                 subject = "test"
             };
 
@@ -93,8 +93,8 @@ namespace FreshDesk.Unit.Tests
             {
                 description = "Test Description",
                 email = "test@test.com",
-                priority = 1,
-                status = 2,
+                priority = Enum.TicketPriority.High,
+                status = Enum.TicketStatus.Open,
                 subject = "test"
             };
 

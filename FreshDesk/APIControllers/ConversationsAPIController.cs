@@ -30,33 +30,44 @@ namespace FreshDesk.APIControllers
         [Route("CreateNote")]
         public IActionResult CreateNote(long ticket_id, NoteModel noteModel)
         {
-            string apiPath = $"tickets/{ticket_id}/notes";
-            string json = JsonConvert.SerializeObject(noteModel);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_freshDeskModel.BaseURL + apiPath);
-            request.ContentType = "application/json";
-            request.Method = "POST";
-            byte[] byteArray = Encoding.UTF8.GetBytes(json);
-            request.ContentLength = byteArray.Length;
-            string authInfo = _freshDeskModel.APIKey + ":X";
-            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-            request.Headers["Authorization"] = "Basic " + authInfo;
+            if(ModelState.IsValid && ticket_id != 0)
+            {
+                string apiPath = $"tickets/{ticket_id}/notes";
+                string json = JsonConvert.SerializeObject(noteModel);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_freshDeskModel.BaseURL + apiPath);
+                request.ContentType = "application/json";
+                request.Method = "POST";
+                byte[] byteArray = Encoding.UTF8.GetBytes(json);
+                request.ContentLength = byteArray.Length;
+                string authInfo = _freshDeskModel.APIKey + ":X";
+                authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+                request.Headers["Authorization"] = "Basic " + authInfo;
 
-            Stream dataStream = request.GetRequestStream();
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            dataStream.Close();
-            try
-            {
-                WebResponse response = request.GetResponse();
-                dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                string Response = reader.ReadToEnd();
-                NotesModel notes = new NotesModel();
-                notes = JsonConvert.DeserializeObject<NotesModel>(Response);
-                return Ok(notes);
+                Stream dataStream = request.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+                try
+                {
+                    WebResponse response = request.GetResponse();
+                    dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    string Response = reader.ReadToEnd();
+                    NotesModel notes = new NotesModel();
+                    notes = JsonConvert.DeserializeObject<NotesModel>(Response);
+                    return Ok(notes);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
             }
-            catch (Exception e)
+            else if(ticket_id == 0)
             {
-                return BadRequest(e.Message);
+                return BadRequest("Enter Ticket Id");
+            }
+            else
+            {
+                return BadRequest(ModelState);
             }
         }
 
@@ -67,31 +78,38 @@ namespace FreshDesk.APIControllers
         [Route("ListAllTicketNotes")]
         public IActionResult ListAllTicketNotes(long id)
         {
-            string apiPath = $"tickets/{id}/conversations";
-            string responseBody = String.Empty;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_freshDeskModel.BaseURL + apiPath);
-            request.ContentType = "application/json";
-            request.Method = "GET";
-            string authInfo = _freshDeskModel.APIKey + ":X";
-            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-            request.Headers["Authorization"] = "Basic " + authInfo;
-            try
+            if (id != 0)
             {
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                string apiPath = $"tickets/{id}/conversations";
+                string responseBody = String.Empty;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_freshDeskModel.BaseURL + apiPath);
+                request.ContentType = "application/json";
+                request.Method = "GET";
+                string authInfo = _freshDeskModel.APIKey + ":X";
+                authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+                request.Headers["Authorization"] = "Basic " + authInfo;
+                try
                 {
-                    Stream dataStream = response.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream);
-                    responseBody = reader.ReadToEnd();
-                    reader.Close();
-                    dataStream.Close();
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    {
+                        Stream dataStream = response.GetResponseStream();
+                        StreamReader reader = new StreamReader(dataStream);
+                        responseBody = reader.ReadToEnd();
+                        reader.Close();
+                        dataStream.Close();
+                    }
+                    List<NotesModel> notes = new List<NotesModel>();
+                    notes = JsonConvert.DeserializeObject<List<NotesModel>>(responseBody);
+                    return Ok(notes);
                 }
-                List<NotesModel> notes = new List<NotesModel>();
-                notes = JsonConvert.DeserializeObject<List<NotesModel>>(responseBody);
-                return Ok(notes);
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
             }
-            catch (Exception e)
+            else
             {
-                return BadRequest(e.Message);
+                return BadRequest("Enter Id");
             }
         }
 
@@ -102,33 +120,44 @@ namespace FreshDesk.APIControllers
         [Route("UpdateConversation")]
         public IActionResult UpdateConversation(long id, NoteModel noteModel)
         {
-            string apiPath = $"conversations/{id}";
-            string json = JsonConvert.SerializeObject(noteModel);
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_freshDeskModel.BaseURL + apiPath);
-            request.ContentType = "application/json";
-            request.Method = "PUT";
-            byte[] byteArray = Encoding.UTF8.GetBytes(json);
-            request.ContentLength = byteArray.Length;
-            string authInfo = _freshDeskModel.APIKey + ":X";
-            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-            request.Headers["Authorization"] = "Basic " + authInfo;
+            if(ModelState.IsValid && id != 0)
+            {
+                string apiPath = $"conversations/{id}";
+                string json = JsonConvert.SerializeObject(noteModel);
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_freshDeskModel.BaseURL + apiPath);
+                request.ContentType = "application/json";
+                request.Method = "PUT";
+                byte[] byteArray = Encoding.UTF8.GetBytes(json);
+                request.ContentLength = byteArray.Length;
+                string authInfo = _freshDeskModel.APIKey + ":X";
+                authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+                request.Headers["Authorization"] = "Basic " + authInfo;
 
-            Stream dataStream = request.GetRequestStream();
-            dataStream.Write(byteArray, 0, byteArray.Length);
-            dataStream.Close();
-            try
-            {
-                WebResponse response = request.GetResponse();
-                dataStream = response.GetResponseStream();
-                StreamReader reader = new StreamReader(dataStream);
-                string Response = reader.ReadToEnd();
-                NotesModel notes = new NotesModel();
-                notes = JsonConvert.DeserializeObject<NotesModel>(Response);
-                return Ok(notes);
+                Stream dataStream = request.GetRequestStream();
+                dataStream.Write(byteArray, 0, byteArray.Length);
+                dataStream.Close();
+                try
+                {
+                    WebResponse response = request.GetResponse();
+                    dataStream = response.GetResponseStream();
+                    StreamReader reader = new StreamReader(dataStream);
+                    string Response = reader.ReadToEnd();
+                    NotesModel notes = new NotesModel();
+                    notes = JsonConvert.DeserializeObject<NotesModel>(Response);
+                    return Ok(notes);
+                }
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
             }
-            catch (Exception e)
+            else if(id == 0)
             {
-                return BadRequest(e.Message);
+                return BadRequest("Enter Id");
+            }
+            else
+            {
+                return BadRequest(ModelState);
             }
         }
 
@@ -139,29 +168,36 @@ namespace FreshDesk.APIControllers
         [Route("DeleteConversation")]
         public IActionResult DeleteConversation(long id)
         {
-            string apiPath = $"conversations/{id}";
-            string responseBody = String.Empty;
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_freshDeskModel.BaseURL + apiPath);
-            request.ContentType = "application/json";
-            request.Method = "DELETE";
-            string authInfo = _freshDeskModel.APIKey + ":X";
-            authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
-            request.Headers["Authorization"] = "Basic " + authInfo;
-            try
+            if (id != 0)
             {
-                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                string apiPath = $"conversations/{id}";
+                string responseBody = String.Empty;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_freshDeskModel.BaseURL + apiPath);
+                request.ContentType = "application/json";
+                request.Method = "DELETE";
+                string authInfo = _freshDeskModel.APIKey + ":X";
+                authInfo = Convert.ToBase64String(Encoding.Default.GetBytes(authInfo));
+                request.Headers["Authorization"] = "Basic " + authInfo;
+                try
                 {
-                    Stream dataStream = response.GetResponseStream();
-                    StreamReader reader = new StreamReader(dataStream);
-                    responseBody = reader.ReadToEnd();
-                    reader.Close();
-                    dataStream.Close();
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    {
+                        Stream dataStream = response.GetResponseStream();
+                        StreamReader reader = new StreamReader(dataStream);
+                        responseBody = reader.ReadToEnd();
+                        reader.Close();
+                        dataStream.Close();
+                    }
+                    return Ok("Deleted Successfully");
                 }
-                return Ok("Deleted Successfully");
+                catch (Exception e)
+                {
+                    return BadRequest(e.Message);
+                }
             }
-            catch (Exception e)
+            else
             {
-                return BadRequest(e.Message);
+                return BadRequest("Enter Id");
             }
         }
     }
