@@ -50,7 +50,7 @@ namespace FreshDesk.Unit.Tests
         /// Test the view a ticket method of the Ticket API Controller
         /// </summary>
         [Fact]
-        public void ReturnsViewaTicket()
+        public void ReturnsViewTicket()
         {
             //Arrange
             long id = 20;
