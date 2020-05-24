@@ -6,13 +6,13 @@ using Xunit;
 
 namespace FreshDesk.Unit.Tests
 {
-    public class ConversationAPIShould
+    public class ConversationApiShould
     {
         public IOptions<FreshDeskModel> _freshDeskModel;
         private readonly ExceptionFilter _exceptionFilter;
         public int successStatus = 200;
 
-        public ConversationAPIShould()
+        public ConversationApiShould()
         {
             var freskdesk = new FreshDeskModel
             {
@@ -35,9 +35,9 @@ namespace FreshDesk.Unit.Tests
                 body = "Test Description"
             };
 
-            long id = 38;
+            long id = 50;
 
-            var controller = new ConversationsAPIController(_freshDeskModel, _exceptionFilter);
+            var controller = new ConversationsApiController(_freshDeskModel, _exceptionFilter);
 
             // Act
             var result = controller.CreateNote(id, noteModel);
@@ -54,9 +54,9 @@ namespace FreshDesk.Unit.Tests
         public void ReturnsListAllTicketNotes()
         {
             //Arrange
-            long id = 38;
+            long id = 50;
 
-            var controller = new ConversationsAPIController(_freshDeskModel, _exceptionFilter);
+            var controller = new ConversationsApiController(_freshDeskModel, _exceptionFilter);
 
             // Act
             var result = controller.ListAllTicketNotes(id);
@@ -78,9 +78,9 @@ namespace FreshDesk.Unit.Tests
                 body = "Test Description"
             };
 
-            long id = 65000213246;
+            long id = 65000261625;
 
-            var controller = new ConversationsAPIController(_freshDeskModel, _exceptionFilter);
+            var controller = new ConversationsApiController(_freshDeskModel, _exceptionFilter);
 
             // Act
             var result = controller.UpdateConversation(id, noteModel);
@@ -97,9 +97,9 @@ namespace FreshDesk.Unit.Tests
         public void ReturnsDeleteConversation()
         {
             //Arrange
-            long id = 65000213324;   //Id need to be change every time
+            long id = 65000261613;   //Id need to be change every time
 
-            var controller = new ConversationsAPIController(_freshDeskModel, _exceptionFilter);
+            var controller = new ConversationsApiController(_freshDeskModel, _exceptionFilter);
 
             // Act
             var result = controller.DeleteConversation(id);

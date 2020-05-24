@@ -14,12 +14,12 @@ namespace FreshDesk.APIControllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class ConversationsAPIController : ControllerBase
+    public class ConversationsApiController : ControllerBase
     {
         private readonly FreshDeskModel _freshDeskModel;
         private readonly ExceptionFilter _exceptionFilter;
 
-        public ConversationsAPIController(IOptions<FreshDeskModel> freshDeskModel, ExceptionFilter exceptionFilter)
+        public ConversationsApiController(IOptions<FreshDeskModel> freshDeskModel, ExceptionFilter exceptionFilter)
         {
             _freshDeskModel = freshDeskModel.Value;   //Get API Key and Base URL from the appsettings.json
             _exceptionFilter = exceptionFilter;
@@ -33,7 +33,7 @@ namespace FreshDesk.APIControllers
         [Route("CreateNote")]
         public IActionResult CreateNote(long ticket_id, NoteModel noteModel)
         {
-            if(ModelState.IsValid && ticket_id != 0)
+            if (ModelState.IsValid && ticket_id != 0)
             {
                 string apiPath = $"tickets/{ticket_id}/notes";
                 string json = JsonConvert.SerializeObject(noteModel);
@@ -55,8 +55,7 @@ namespace FreshDesk.APIControllers
                     dataStream = response.GetResponseStream();
                     StreamReader reader = new StreamReader(dataStream);
                     string Response = reader.ReadToEnd();
-                    NotesModel notes = new NotesModel();
-                    notes = JsonConvert.DeserializeObject<NotesModel>(Response);
+                    NotesModel notes = JsonConvert.DeserializeObject<NotesModel>(Response);
                     return Ok(notes);
                 }
                 catch (WebException e)
@@ -66,7 +65,7 @@ namespace FreshDesk.APIControllers
                     return BadRequest(exceptionModel);
                 }
             }
-            else if(ticket_id == 0)
+            else if (ticket_id == 0)
             {
                 return BadRequest("Enter Ticket Id");
             }
@@ -103,8 +102,7 @@ namespace FreshDesk.APIControllers
                         reader.Close();
                         dataStream.Close();
                     }
-                    List<NotesModel> notes = new List<NotesModel>();
-                    notes = JsonConvert.DeserializeObject<List<NotesModel>>(responseBody);
+                    List<NotesModel> notes = JsonConvert.DeserializeObject<List<NotesModel>>(responseBody);
                     return Ok(notes);
                 }
                 catch (WebException e)
@@ -127,7 +125,7 @@ namespace FreshDesk.APIControllers
         [Route("UpdateConversation")]
         public IActionResult UpdateConversation(long id, NoteModel noteModel)
         {
-            if(ModelState.IsValid && id != 0)
+            if (ModelState.IsValid && id != 0)
             {
                 string apiPath = $"conversations/{id}";
                 string json = JsonConvert.SerializeObject(noteModel);
@@ -149,8 +147,7 @@ namespace FreshDesk.APIControllers
                     dataStream = response.GetResponseStream();
                     StreamReader reader = new StreamReader(dataStream);
                     string Response = reader.ReadToEnd();
-                    NotesModel notes = new NotesModel();
-                    notes = JsonConvert.DeserializeObject<NotesModel>(Response);
+                    NotesModel notes = JsonConvert.DeserializeObject<NotesModel>(Response);
                     return Ok(notes);
                 }
                 catch (WebException e)
@@ -160,7 +157,7 @@ namespace FreshDesk.APIControllers
                     return BadRequest(exceptionModel);
                 }
             }
-            else if(id == 0)
+            else if (id == 0)
             {
                 return BadRequest("Enter Id");
             }
@@ -180,7 +177,6 @@ namespace FreshDesk.APIControllers
             if (id != 0)
             {
                 string apiPath = $"conversations/{id}";
-                string responseBody = String.Empty;
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_freshDeskModel.BaseURL + apiPath);
                 request.ContentType = "application/json";
                 request.Method = "DELETE";
@@ -192,9 +188,6 @@ namespace FreshDesk.APIControllers
                     using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                     {
                         Stream dataStream = response.GetResponseStream();
-                        StreamReader reader = new StreamReader(dataStream);
-                        responseBody = reader.ReadToEnd();
-                        reader.Close();
                         dataStream.Close();
                     }
                     return Ok("Deleted Successfully");

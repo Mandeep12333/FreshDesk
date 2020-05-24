@@ -8,19 +8,18 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
-using System.Net.Http;
 using System.Text;
 
 namespace FreshDesk.APIControllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TicketsAPIController : ControllerBase
+    public class TicketsApiController : ControllerBase
     {
         private readonly FreshDeskModel _freshDeskModel;
         private readonly ExceptionFilter _exceptionFilter;
 
-        public TicketsAPIController(IOptions<FreshDeskModel> freshDeskModel,ExceptionFilter exceptionFilter)
+        public TicketsApiController(IOptions<FreshDeskModel> freshDeskModel, ExceptionFilter exceptionFilter)
         {
             _freshDeskModel = freshDeskModel.Value;  //Get API Key and Base URL from the appsettings.json
             _exceptionFilter = exceptionFilter;
@@ -60,8 +59,7 @@ namespace FreshDesk.APIControllers
                     dataStream = response.GetResponseStream();
                     StreamReader reader = new StreamReader(dataStream);
                     string Response = reader.ReadToEnd();
-                    TicketsModel Tickets = new TicketsModel();
-                    Tickets = JsonConvert.DeserializeObject<TicketsModel>(Response);
+                    TicketsModel Tickets = JsonConvert.DeserializeObject<TicketsModel>(Response);
                     return Ok(Tickets);
                 }
                 catch (WebException e)
@@ -104,8 +102,7 @@ namespace FreshDesk.APIControllers
                         reader.Close();
                         dataStream.Close();
                     }
-                    TicketsModel Tickets = new TicketsModel();
-                    Tickets = JsonConvert.DeserializeObject<TicketsModel>(responseBody);
+                    TicketsModel Tickets = JsonConvert.DeserializeObject<TicketsModel>(responseBody);
                     return Ok(Tickets);
                 }
                 catch (WebException e)
@@ -146,8 +143,7 @@ namespace FreshDesk.APIControllers
                     reader.Close();
                     dataStream.Close();
                 }
-                List<TicketsModel> TicketsList = new List<TicketsModel>();
-                TicketsList = JsonConvert.DeserializeObject<List<TicketsModel>>(responseBody);
+                List<TicketsModel> TicketsList = JsonConvert.DeserializeObject<List<TicketsModel>>(responseBody);
                 return Ok(TicketsList);
             }
             catch (WebException e)
@@ -192,8 +188,7 @@ namespace FreshDesk.APIControllers
                     dataStream = response.GetResponseStream();
                     StreamReader reader = new StreamReader(dataStream);
                     string Response = reader.ReadToEnd();
-                    TicketsModel Tickets = new TicketsModel();
-                    Tickets = JsonConvert.DeserializeObject<TicketsModel>(Response);
+                    TicketsModel Tickets = JsonConvert.DeserializeObject<TicketsModel>(Response);
                     return Ok(Tickets);
                 }
                 catch (WebException e)
@@ -203,7 +198,7 @@ namespace FreshDesk.APIControllers
                     return BadRequest(exceptionModel);
                 }
             }
-            else if(id == 0)
+            else if (id == 0)
             {
                 return BadRequest("Enter Id");
             }
@@ -223,7 +218,6 @@ namespace FreshDesk.APIControllers
             if (id != 0)
             {
                 string apiPath = $"tickets/{id}";
-                string responseBody = String.Empty;
                 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_freshDeskModel.BaseURL + apiPath);
                 request.ContentType = "application/json";
                 request.Method = "DELETE";
@@ -235,9 +229,6 @@ namespace FreshDesk.APIControllers
                     using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                     {
                         Stream dataStream = response.GetResponseStream();
-                        StreamReader reader = new StreamReader(dataStream);
-                        responseBody = reader.ReadToEnd();
-                        reader.Close();
                         dataStream.Close();
                     }
                     return Ok("Deleted Successfully");

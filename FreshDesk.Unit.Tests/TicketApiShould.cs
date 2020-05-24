@@ -6,13 +6,13 @@ using Xunit;
 
 namespace FreshDesk.Unit.Tests
 {
-    public class TicketsAPIShould
+    public class TicketApiShould
     {
         public IOptions<FreshDeskModel> _freshDeskModel;
         private readonly ExceptionFilter _exceptionFilter;
         public int successStatus = 200;
 
-        public TicketsAPIShould()
+        public TicketApiShould()
         {
             var freskdesk = new FreshDeskModel
             {
@@ -39,7 +39,7 @@ namespace FreshDesk.Unit.Tests
                 subject = "test"
             };
 
-            var controller = new TicketsAPIController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
 
             // Act
             var result = controller.CreateTickets(ticketModel);
@@ -56,9 +56,9 @@ namespace FreshDesk.Unit.Tests
         public void ReturnsViewTicket()
         {
             //Arrange
-            long id = 20;
+            long id = 50;
 
-            var controller = new TicketsAPIController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
 
             // Act
             var result = controller.ViewTicket(id);
@@ -75,7 +75,7 @@ namespace FreshDesk.Unit.Tests
         public void ReturnsListAllTickets()
         {
             //Arrange
-            var controller = new TicketsAPIController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
 
             // Act
             var result = controller.ListAllTickets();
@@ -101,9 +101,9 @@ namespace FreshDesk.Unit.Tests
                 subject = "test"
             };
 
-            long id = 20;
+            long id = 50;
 
-            var controller = new TicketsAPIController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
 
             // Act
             var result = controller.UpdateTicket(id, ticketModel);
@@ -120,9 +120,9 @@ namespace FreshDesk.Unit.Tests
         public void ReturnsDeleteTicket()
         {
             //Arrange
-            long id = 25;  //Id need to be change every time
+            long id = 51;  //Id need to be change every time
 
-            var controller = new TicketsAPIController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
 
             // Act
             var result = controller.DeleteTicket(id);
