@@ -10,6 +10,7 @@ namespace FreshDesk.Unit.Tests
     {
         public IOptions<FreshDeskModel> _freshDeskModel;
         private readonly ExceptionFilter _exceptionFilter;
+        private readonly FreshDeskApi _freshDeskApi;
         public int successStatus = 200;
         public int failureStatus = 400;
 
@@ -22,6 +23,7 @@ namespace FreshDesk.Unit.Tests
             };
             _freshDeskModel = Options.Create(freskdesk);
             _exceptionFilter = new ExceptionFilter();
+            _freshDeskApi = new FreshDeskApi(_freshDeskModel, _exceptionFilter);
         }
 
         /// <summary>
@@ -38,7 +40,7 @@ namespace FreshDesk.Unit.Tests
 
             long id = 50;
 
-            var controller = new ConversationsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new ConversationsApiController(_freshDeskApi);
 
             // Act
             var result = controller.CreateNote(id, noteModel);
@@ -62,7 +64,7 @@ namespace FreshDesk.Unit.Tests
 
             long id = 50;
 
-            var controller = new ConversationsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new ConversationsApiController(_freshDeskApi);
 
             // Act
             var result = controller.CreateNote(id, noteModel);
@@ -81,7 +83,7 @@ namespace FreshDesk.Unit.Tests
             //Arrange
             long id = 50;
 
-            var controller = new ConversationsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new ConversationsApiController(_freshDeskApi);
 
             // Act
             var result = controller.ListAllTicketNotes(id);
@@ -100,7 +102,7 @@ namespace FreshDesk.Unit.Tests
             //Arrange
             long id = 0;
 
-            var controller = new ConversationsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new ConversationsApiController(_freshDeskApi);
 
             // Act
             var result = controller.ListAllTicketNotes(id);
@@ -124,7 +126,7 @@ namespace FreshDesk.Unit.Tests
 
             long id = 65000261625;
 
-            var controller = new ConversationsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new ConversationsApiController(_freshDeskApi);
 
             // Act
             var result = controller.UpdateConversation(id, noteModel);
@@ -148,7 +150,7 @@ namespace FreshDesk.Unit.Tests
 
             long id = 65000261625;
 
-            var controller = new ConversationsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new ConversationsApiController(_freshDeskApi);
 
             // Act
             var result = controller.UpdateConversation(id, noteModel);
@@ -167,7 +169,7 @@ namespace FreshDesk.Unit.Tests
             //Arrange
             long id = 65000261613;   //Id need to be change every time
 
-            var controller = new ConversationsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new ConversationsApiController(_freshDeskApi);
 
             // Act
             var result = controller.DeleteConversation(id);
@@ -186,7 +188,7 @@ namespace FreshDesk.Unit.Tests
             //Arrange
             long id = 6500;   //Id need to be change every time
 
-            var controller = new ConversationsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new ConversationsApiController(_freshDeskApi);
 
             // Act
             var result = controller.DeleteConversation(id);

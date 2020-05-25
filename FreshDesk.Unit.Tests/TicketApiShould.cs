@@ -10,6 +10,7 @@ namespace FreshDesk.Unit.Tests
     {
         public IOptions<FreshDeskModel> _freshDeskModel;
         private readonly ExceptionFilter _exceptionFilter;
+        private readonly FreshDeskApi _freshDeskApi;
         public int successStatus = 200;
         public int failureStatus = 400;
 
@@ -22,6 +23,7 @@ namespace FreshDesk.Unit.Tests
             };
             _freshDeskModel = Options.Create(freskdesk);
             _exceptionFilter = new ExceptionFilter();
+            _freshDeskApi = new FreshDeskApi(_freshDeskModel, _exceptionFilter);
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace FreshDesk.Unit.Tests
                 subject = "test"
             };
 
-            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskApi);
 
             // Act
             var result = controller.CreateTickets(ticketModel);
@@ -66,7 +68,7 @@ namespace FreshDesk.Unit.Tests
                 subject = "test"
             };
 
-            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskApi);
 
             // Act
             var result = controller.CreateTickets(ticketModel);
@@ -85,7 +87,7 @@ namespace FreshDesk.Unit.Tests
             //Arrange
             long id = 50;
 
-            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskApi);
 
             // Act
             var result = controller.ViewTicket(id);
@@ -104,7 +106,7 @@ namespace FreshDesk.Unit.Tests
             //Arrange
             long id = 0;
 
-            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskApi);
 
             // Act
             var result = controller.ViewTicket(id);
@@ -121,7 +123,7 @@ namespace FreshDesk.Unit.Tests
         public void ReturnsListAllTickets()
         {
             //Arrange
-            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskApi);
 
             // Act
             var result = controller.ListAllTickets();
@@ -149,7 +151,7 @@ namespace FreshDesk.Unit.Tests
 
             long id = 50;
 
-            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskApi);
 
             // Act
             var result = controller.UpdateTicket(id, ticketModel);
@@ -177,7 +179,7 @@ namespace FreshDesk.Unit.Tests
 
             long id = 0;
 
-            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskApi);
 
             // Act
             var result = controller.UpdateTicket(id, ticketModel);
@@ -196,7 +198,7 @@ namespace FreshDesk.Unit.Tests
             //Arrange
             long id = 51;  //Id need to be change every time
 
-            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskApi);
 
             // Act
             var result = controller.DeleteTicket(id);
@@ -215,7 +217,7 @@ namespace FreshDesk.Unit.Tests
             //Arrange
             long id = 0;  //Id need to be change every time
 
-            var controller = new TicketsApiController(_freshDeskModel, _exceptionFilter);
+            var controller = new TicketsApiController(_freshDeskApi);
 
             // Act
             var result = controller.DeleteTicket(id);

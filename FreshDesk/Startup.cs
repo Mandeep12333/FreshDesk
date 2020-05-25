@@ -32,6 +32,7 @@ namespace FreshDesk
             });
 
             services.AddScoped(typeof(ExceptionFilter));
+            services.AddScoped(typeof(FreshDeskApi));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
