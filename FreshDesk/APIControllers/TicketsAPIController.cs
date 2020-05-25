@@ -1,7 +1,6 @@
 ﻿using FreshDesk.Models;
 using FreshDesk.Utilities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;

@@ -96,4 +96,3 @@ D:\FreshDesk\FreshDesk\obj\Debug\netcoreapp3.1\staticwebassets\FreshDesk.StaticW
 D:\FreshDesk\FreshDesk\obj\Debug\netcoreapp3.1\FreshDesk.dll
 D:\FreshDesk\FreshDesk\obj\Debug\netcoreapp3.1\FreshDesk.pdb
 D:\FreshDesk\FreshDesk\obj\Debug\netcoreapp3.1\FreshDesk.genruntimeconfig.cache
-D:\FreshDesk\FreshDesk\obj\Debug\netcoreapp3.1\FreshDesk.csprojAssemblyReference.cache
